@@ -1,10 +1,12 @@
 package com.jiayuan.mainframework.application;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.jiayuan.mainframework.base.BaseActivity;
-import com.jiayuan.mainframework.network.CookieRetrofit;
+import com.jiayuan.mainframework.network.BaseRetrofit;
 import com.jiayuan.mainframework.network.LoginRetrofit;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +16,23 @@ import java.util.List;
  */
 
 public class MyApplication extends Application {
+    private static Context mContext;
     private List<BaseActivity> mBaseActivityList = new ArrayList<>();
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        mContext = getApplicationContext();
         //initHuanXin();
         LoginRetrofit.getInstance().init(getApplicationContext());
-        CookieRetrofit.getInstance().init(getApplicationContext());
+        BaseRetrofit.getInstance().init(getApplicationContext());
 
+        ZXingLibrary.initDisplayOpinion(this);
+
+    }
+
+    public static Context getContext() {
+        return mContext;
     }
 
 

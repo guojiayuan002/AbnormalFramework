@@ -25,4 +25,21 @@
         android:layout_height="wrap_content"
         android:onClick="goStore"
         android:text="进入店铺"/>
+
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="默认扫描"/>
+
+    <Button
+        android:id="@+id/btn_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="创建二维码"/>
+    <Button
+        android:id="@+id/btn_RecycleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="带刷新的RecycleView"/>
 </LinearLayout>

@@ -4,13 +4,17 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jiayuan.mainframework.bean.LoginBean;
+import com.jiayuan.mainframework.bean.PersonInfo;
 import com.jiayuan.mainframework.network.persistentcookiejar.interceptors.LoggingInterceptor;
 import com.jiayuan.mainframework.network.persistentcookiejar.interceptors.SaveCookiesInterceptor;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import rx.Observable;
 
 
 /**
@@ -56,9 +60,18 @@ public class LoginRetrofit {
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addConverterFactory(ScalarsConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         mApi = retrofit.create(Api.class);
     }
 
+    //登录
+    public Observable<LoginBean> login(String memberName, String password) {
+        return mApi.RXlogin(memberName, password);
+    }
+
+    public Observable<PersonInfo> getPersonInfo(String memberId){
+        return mApi.getPersonInfo(memberId);
+    }
 
 }

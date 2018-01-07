@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.jiayuan.mainframework.R;
 import com.jiayuan.mainframework.adapter.HomeRVAdapter;
-import com.jiayuan.mainframework.base.BaseFragment;
+import com.jiayuan.mainframework.otherbase.BaseFragment2;
 import com.jiayuan.mainframework.presenter.impl.HomePresenterIpml;
 import com.jiayuan.mainframework.utils.ToastUtils;
 import com.jiayuan.mainframework.view.viewinterface.HomeFragmentView;
@@ -24,18 +24,23 @@ import static com.jiayuan.mainframework.base.BaseActivity.REQUEST_SCAN_CODE;
 /**
  * Created by guojiayuan on 2017/8/22.
  */
-public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, HomeFragmentView {
+public class HomeFragment extends BaseFragment2<HomeFragmentView, HomePresenterIpml> implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mRecycleView;
     private List<String> list = new ArrayList<>();
     private HomeRVAdapter mHomeRVAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private HomePresenterIpml mHomePresenter;
+
+
+    @Override
+    protected HomePresenterIpml createPresenter() {
+        return new HomePresenterIpml( this);
+    }
 
     @Override
     public void startloadData() {
-        mHomePresenter = new HomePresenterIpml(this);
-        mHomePresenter.requestBanner();
+        mPresenter.getBanner();
+
     }
 
     @Override
@@ -74,13 +79,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     startActivityForResult(intent, REQUEST_SCAN_CODE);
                     break;
                 case R.id.home_btn_promo_code2x://推广码
-                    ToastUtils.showToast(mContext, "在我的界面生成二维码");
+                    ToastUtils.showToast("在我的界面生成二维码");
                     break;
                 case R.id.home_btn_announcement2x:
-                    ToastUtils.showToast(mContext, "点击了公告");
+                    ToastUtils.showToast("点击了公告");
                     break;
                 case R.id.home_btn_all2x:
-                    ToastUtils.showToast(mContext, "点击了全部");
+                    ToastUtils.showToast("点击了全部");
                     break;
             }
         }
@@ -89,19 +94,26 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     //下拉刷新
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);//隐藏掉
+//        mSwipeRefreshLayout.setRefreshing(false);//隐藏掉
+        // 延时1s关闭下拉刷新
+        mSwipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        }, 1000);
     }
 
-    @Override
+
     public void showBanner(List<String> images, List<String> links) {
         mHomeRVAdapter = new HomeRVAdapter(mContext, list, mOnAdapterClickListener);
         mHomeRVAdapter.setBannerData(images, links);
-
-        onLoadDataSuccess();
-    }
-
-    @Override
-    public void showForm() {
-
+        //多个异步请求同时发出时候，只能隐藏一个
+        int visibility = mProgressBar.getVisibility();
+        if (visibility == View.VISIBLE){
+            onLoadDataSuccess();
+        }
     }
 }

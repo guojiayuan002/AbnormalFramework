@@ -151,7 +151,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:background="@null"
-                    android:clickable="true"
                     android:padding="8dp"
                     android:text="忘记密码"
                     android:textColor="#666666"/>

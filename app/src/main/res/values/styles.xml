@@ -17,4 +17,12 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <!-- 九宫格图片 -->
+    <declare-styleable name="RatioImageView">
+        <attr name="ratio" format="float" />
+    </declare-styleable>
+    <declare-styleable name="NineGridLayout">
+        <attr name="sapcing" format="dimension" />
+    </declare-styleable>
+
 </resources>

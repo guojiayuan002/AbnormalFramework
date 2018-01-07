@@ -41,7 +41,7 @@ public class HomeRVAdapter extends RecyclerView.Adapter {
         mContext = context;
         mDataList = list;
         mOnAdapterClickListener = listener;
-        notifyDataSetChanged();
+       // notifyDataSetChanged();
     }
 
     public void setBannerData(List<String> images, List<String> links) {
@@ -174,7 +174,7 @@ public class HomeRVAdapter extends RecyclerView.Adapter {
 
         @Override
         public void OnBannerClick(int position) {
-            ToastUtils.showToast(mContext, mBannerLinks.get(position));
+            ToastUtils.showToast( mBannerLinks.get(position));
         }
     }
 

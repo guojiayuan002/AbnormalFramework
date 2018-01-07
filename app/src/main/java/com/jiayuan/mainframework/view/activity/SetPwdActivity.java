@@ -21,7 +21,7 @@ import com.jiayuan.mainframework.base.BaseActivity;
 import com.jiayuan.mainframework.bean.RegistBean;
 import com.jiayuan.mainframework.bean.ValidationBean;
 import com.jiayuan.mainframework.network.Api;
-import com.jiayuan.mainframework.network.CookieRetrofit;
+import com.jiayuan.mainframework.network.BaseRetrofit;
 import com.jiayuan.mainframework.network.LoginRetrofit;
 import com.jiayuan.mainframework.utils.RSAEncrypt;
 import com.jiayuan.mainframework.utils.SPUtils;
@@ -80,7 +80,7 @@ public class SetPwdActivity extends BaseActivity implements TextWatcher {
         mPhone = getIntent().getStringExtra("phone");
         mSMSValidation.addTextChangedListener(this);
         mSetPwd.addTextChangedListener(this);
-        mApiCookie = CookieRetrofit.getInstance().getApi();
+        mApiCookie = BaseRetrofit.getInstance().getApi();
         mApiLogin = LoginRetrofit.getInstance().getApi();
     }
 
@@ -168,7 +168,7 @@ public class SetPwdActivity extends BaseActivity implements TextWatcher {
                 if ("0".equals(code)) {
                     //parserJson(json);
                     //System.out.println("获取验证码成功" + "返回码==" + code);
-                    ToastUtils.showToast(mContext, "获取验证码成功");
+                    ToastUtils.showToast( "获取验证码成功");
 
                 } else if ("1".equals(code)) {
                     //-1表示空数据
@@ -178,7 +178,7 @@ public class SetPwdActivity extends BaseActivity implements TextWatcher {
                     // ToastUtils.showToast(mContext, "获取验证码失败2");
                 } else if ("22".equals(code)) {
                     //22 一小时不能获取超过3次
-                    ToastUtils.showToast(mContext, "获取验证码失败，一小时不能获取超过3次");
+                    ToastUtils.showToast( "获取验证码失败，一小时不能获取超过3次");
                 }
 
             }
@@ -186,7 +186,7 @@ public class SetPwdActivity extends BaseActivity implements TextWatcher {
             @Override
             public void onFailure(Call<ValidationBean> call, Throwable t) {
                 //  ShowLog.d("SetPwdActivity", "错误信息" + t.getLocalizedMessage());
-                ToastUtils.showToast(mContext, "网络错误3");
+                ToastUtils.showToast( "网络错误3");
             }
         });
     }
@@ -196,7 +196,7 @@ public class SetPwdActivity extends BaseActivity implements TextWatcher {
 
         //密码为空
         if (TextUtils.isEmpty(mPwd)) {
-            ToastUtils.showToast(this, "密码不能为空");
+            ToastUtils.showToast("密码不能为空");
             return;
         }
         try {
@@ -224,20 +224,20 @@ public class SetPwdActivity extends BaseActivity implements TextWatcher {
                 if ("1".equals(code)) {
 
                     System.out.println("注册成功" + "返回码==" + code);
-                    ToastUtils.showToast(mContext, "注册成功");
+                    ToastUtils.showToast( "注册成功");
                     //sp保存用户加密手机号
                     //SPUtils.putString(mContext,"UserRSAPhone",RSAUserName);
                     SetPwdActivity.this.finish();//关闭当前界面
 
                 } else if ("0".equals(code)) {
                     //-1表示空数据
-                    ToastUtils.showToast(mContext, "注册失败");
+                    ToastUtils.showToast( "注册失败");
                 } else if ("501004".equals(code)) {
                     //-1表示空数据
-                    ToastUtils.showToast(mContext, "注册失败，手机验证码错误");
+                    ToastUtils.showToast( "注册失败，手机验证码错误");
                 } else if ("501001".equals(code)) {
                     //-1表示空数据
-                    ToastUtils.showToast(mContext, "注册失败，用户已注册");
+                    ToastUtils.showToast("注册失败，用户已注册");
                 }
 
             }
@@ -245,7 +245,7 @@ public class SetPwdActivity extends BaseActivity implements TextWatcher {
             @Override
             public void onFailure(Call<RegistBean> call, Throwable t) {
                 //  ShowLog.d("SetPwdActivity", "错误信息=" + t.getLocalizedMessage());
-                ToastUtils.showToast(mContext, "注册失败");
+                ToastUtils.showToast("注册失败");
             }
         });
     }

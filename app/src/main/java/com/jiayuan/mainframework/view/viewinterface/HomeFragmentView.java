@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public interface HomeFragmentView {
+
     void showBanner(List<String> images, List<String> links);
     void showForm();
 }

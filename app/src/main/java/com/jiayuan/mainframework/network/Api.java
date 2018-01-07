@@ -1,6 +1,7 @@
 package com.jiayuan.mainframework.network;
 
 
+import com.jiayuan.mainframework.bean.AccountDetail;
 import com.jiayuan.mainframework.bean.BannerBean;
 import com.jiayuan.mainframework.bean.LoginBean;
 import com.jiayuan.mainframework.bean.PersonInfo;
@@ -13,6 +14,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import rx.Observable;
 
 /**
  * Created by Administrator on 2017/5/31.
@@ -34,6 +36,14 @@ public interface Api {
     @FormUrlEncoded
     @POST("appApi/v1.0/member/login")
     Call<LoginBean> login(@Field("memberName") String memberName, @Field("pwd") String pwd);
+
+
+    //RX会员登录
+    @FormUrlEncoded
+    @POST("appApi/v1.0/member/login")
+    Observable<LoginBean> RXlogin(@Field("memberName") String memberName, @Field("pwd") String pwd);
+
+
     //4.找回密码
 
     @FormUrlEncoded
@@ -44,7 +54,7 @@ public interface Api {
 
     //3.5.首页轮播图
     @GET("appApi/v1.0/commodity/banner")
-    Call<BannerBean> getBanner();
+   Observable<BannerBean> getBanner();
 //
 //    //3.6.首页商品查询（水平和垂直都是这个接口） 参数可选，（currentPage，pageSize，recommendType）String类型
 //    @FormUrlEncoded
@@ -149,14 +159,14 @@ public interface Api {
 ////    Call<QueryGodsAddress> queryGodsAddress(@Field("memberId") String memberId);
 //
 //    //TODO  4.8 账户资金明细
-//    @FormUrlEncoded
-//    @POST("appApi/v1.0/member/accountDetail")
-//    Call<AccountDetail> queryAccountDetail(@Field("memberId") String memberId,
-//                                           @Field("currentPage") String currentPage,
-//                                           @Field("pageSize") String pageSize,
-//                                           @Field("startTime") String startTime,
-//                                           @Field("endTime") String endTime);
-//
+    @FormUrlEncoded
+    @POST("appApi/v1.0/member/accountDetail")
+    Call<AccountDetail> queryAccountDetail(@Field("memberId") String memberId,
+                                           @Field("currentPage") String currentPage,
+                                           @Field("pageSize") String pageSize,
+                                           @Field("startTime") String startTime,
+                                           @Field("endTime") String endTime);
+
 //    //    4.9 积分明细  红白积分一样   TODO 注意 可变参数不行
 //    @FormUrlEncoded
 //    @POST("appApi/v1.0/member/integralDetail")
@@ -200,9 +210,13 @@ public interface Api {
 //    Call<MemberLevel> getMemberLevel(@Field("memberId") String memberId);
 //
     //5.4 个人基本信息
+//    @FormUrlEncoded
+//    @POST("appApi/v1.0/member/personBaseInfo")
+//    Call<PersonInfo> getPersonInfo(@Field("memberId") String memberId);
+
     @FormUrlEncoded
     @POST("appApi/v1.0/member/personBaseInfo")
-    Call<PersonInfo> getPersonInfo(@Field("memberId") String memberId);
+    Observable<PersonInfo> getPersonInfo(@Field("memberId") String memberId);
 //
 //    //5.5 账户支付
 //    @FormUrlEncoded

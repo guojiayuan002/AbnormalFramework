@@ -7,8 +7,10 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jiayuan.mainframework.R;
 import com.jiayuan.mainframework.adapter.MessageRVAdapter;
-import com.jiayuan.mainframework.base.BaseFragment;
+import com.jiayuan.mainframework.otherbase.BaseFragment2;
+import com.jiayuan.mainframework.presenter.impl.HomePresenterIpml;
 import com.jiayuan.mainframework.utils.ToastUtils;
+import com.jiayuan.mainframework.view.viewinterface.HomeFragmentView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +18,16 @@ import java.util.List;
 /**
  * Created by guojiayuan on 2017/8/22.
  */
-public class MessageFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener {
+public class MessageFragment extends BaseFragment2<HomeFragmentView,HomePresenterIpml> implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemChildClickListener {
 
     private RecyclerView mRecyclerView;
     private List<String> mDataList = new ArrayList<>();
     private MessageRVAdapter mAdapter;
+
+    @Override
+    protected HomePresenterIpml createPresenter() {
+        return null;
+    }
 
     @Override
     public void startloadData() {
@@ -79,7 +86,7 @@ public class MessageFragment extends BaseFragment implements BaseQuickAdapter.On
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ToastUtils.showToast(mContext, "刷新成功");
+                ToastUtils.showToast("刷新成功");
             }
         }, 3000);
     }
@@ -97,7 +104,7 @@ public class MessageFragment extends BaseFragment implements BaseQuickAdapter.On
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         //不和onItemChildClick，同时响应
-        ToastUtils.showToast(mContext, "我是条目" + position + "===haha");
+        ToastUtils.showToast( "我是条目" + position + "===haha");
 
     }
 
@@ -112,10 +119,10 @@ public class MessageFragment extends BaseFragment implements BaseQuickAdapter.On
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.hello:
-                ToastUtils.showToast(mContext, "我是条目" + position + "的hello");
+                ToastUtils.showToast( "我是条目" + position + "的hello");
                 break;
             case R.id.world:
-                ToastUtils.showToast(mContext, "我是条目" + position + "的world");
+                ToastUtils.showToast("我是条目" + position + "的world");
                 break;
 
         }

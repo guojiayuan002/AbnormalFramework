@@ -1,8 +1,6 @@
 package com.jiayuan.mainframework.view.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -10,8 +8,6 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +19,7 @@ import com.jiayuan.mainframework.network.Constance;
 import com.jiayuan.mainframework.otherbase.Base2Activity;
 import com.jiayuan.mainframework.presenter.LoginPresenterlpml;
 import com.jiayuan.mainframework.utils.SPUtils;
+import com.jiayuan.mainframework.utils.StatusBarUtils;
 import com.jiayuan.mainframework.utils.ToastUtils;
 import com.jiayuan.mainframework.view.viewinterface.ILoginView;
 
@@ -62,17 +59,7 @@ public class LoginActivity extends Base2Activity<ILoginView, LoginPresenterlpml>
 
     @Override
     protected int getResView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            //            window.setNavigationBarColor(Color.TRANSPARENT);
-        }
+        StatusBarUtils.setStatusBar(this);
         return R.layout.activity_login;
     }
 

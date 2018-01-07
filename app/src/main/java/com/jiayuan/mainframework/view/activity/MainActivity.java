@@ -1,41 +1,36 @@
 package com.jiayuan.mainframework.view.activity;
 
-import android.graphics.Color;
-import android.os.Build;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.jiayuan.mainframework.R;
-import com.jiayuan.mainframework.base.BaseActivity;
-import com.jiayuan.mainframework.base.BaseFragment;
+import com.jiayuan.mainframework.otherbase.Base2Activity;
+import com.jiayuan.mainframework.otherbase.Base2Presenter;
+import com.jiayuan.mainframework.otherbase.BaseFragment2;
+import com.jiayuan.mainframework.utils.AndroidWorkaround;
 import com.jiayuan.mainframework.utils.FragmentFactory;
+import com.jiayuan.mainframework.utils.StatusBarUtils;
 
-public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends Base2Activity implements BottomNavigationBar.OnTabSelectedListener {
 
     private BottomNavigationBar mBottomNavigationBar;
     private TextBadgeItem mBadgeItem;
 
     @Override
     protected int getResView() {
-        //一配置，整个activity都沉浸
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-//            window.setNavigationBarColor(Color.TRANSPARENT);
+        //设置沉浸式状态栏，这个activity中所有的Fragment都会沉浸
+        StatusBarUtils.setStatusBar(this);
+        if (AndroidWorkaround.checkDeviceHasNavigationBar(this)) {
+            AndroidWorkaround.assistActivity(findViewById(android.R.id.content));
         }
         return R.layout.activity_main;
     }
@@ -45,6 +40,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         mBottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         initBottomNavigation();
         initFirstFragment();
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((MainActivity) mContext, new String[]{Manifest.permission.CAMERA}, 100);
+        }
+    }
+
+    @Override
+    protected Base2Presenter createPresenter() {
+        return null;
     }
 
     private void initBottomNavigation() {
@@ -103,7 +106,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
          * 如果没有添加则添加，然后显示
          */
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        BaseFragment fragment = FragmentFactory.getFragment(position);
+        BaseFragment2 fragment = FragmentFactory.getFragment(position);
         if (!fragment.isAdded()) {
             transaction.add(R.id.fl_content, fragment, "" + position);
         }

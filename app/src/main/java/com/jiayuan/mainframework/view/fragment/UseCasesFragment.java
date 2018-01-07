@@ -10,7 +10,7 @@ import com.jiayuan.mainframework.base.BaseFragment;
  */
 public class UseCasesFragment extends BaseFragment {
     @Override
-    public void startloadData() {
+    public void initData() {
         onLoadDataSuccess();
     }
 

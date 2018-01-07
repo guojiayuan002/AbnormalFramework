@@ -76,7 +76,7 @@ public class PhoneRegistActivity extends BaseActivity implements TextWatcher {
                     startActivity(intent);
                     PhoneRegistActivity.this.finish();
                 } else {
-                    ToastUtils.showToast(this, "电话号码不合法");
+                    ToastUtils.showToast("电话号码不合法");
                     return;
                 }
                 break;

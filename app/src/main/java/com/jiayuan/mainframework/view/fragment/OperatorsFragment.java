@@ -21,7 +21,7 @@ public class OperatorsFragment extends BaseFragment {
     private MessageRVAdapter mAdapter;
 
     @Override
-    public void startloadData() {
+    public void initData() {
         for (int i = 0; i < 55; i++) {
             mDataList.add("我是条目=" + i);
         }
@@ -43,6 +43,7 @@ public class OperatorsFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(mAdapter);
         return view;
+
     }
 
 }

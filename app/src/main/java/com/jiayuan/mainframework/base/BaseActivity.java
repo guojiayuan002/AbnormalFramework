@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity {
 
+    public static final int REQUEST_SCAN_CODE = 1001;//扫一扫请求码
     //短信验证的两个状态，请求验证码 或 等待中
     protected int time = 60;//发送时间
     protected static final int TIME_ING = -1;
@@ -33,18 +34,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        //并不是所有的界面都需要沉浸，哪里需要再配置吧
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Window window = getWindow();
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-//                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-////            window.setNavigationBarColor(Color.TRANSPARENT);
-//        }
+
         MIUISetStatusBarLightMode(getWindow(), true);
         FlymeSetStatusBarLightMode(getWindow(), true);
         setContentView(getResView());

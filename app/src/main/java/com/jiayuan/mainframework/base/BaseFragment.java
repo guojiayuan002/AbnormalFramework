@@ -36,6 +36,7 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //获取context记录
         mContext = getActivity();
+
         Bundle arguments = getArguments();
         if(arguments!=null){
             mArgs = arguments.getString("args");
@@ -56,7 +57,7 @@ public abstract class BaseFragment extends Fragment {
             public void onClick(View v) {
                 mProgressBar.setVisibility(View.VISIBLE);
                 mLoadingError.setVisibility(View.GONE);
-                startloadData();
+                initData();
             }
         });
         return root;
@@ -65,11 +66,11 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        startloadData();
+        initData();
     }
 
     //子类必须实现--开始加载数据
-    public abstract void startloadData();
+    public abstract void initData();
 
     //子类必须实现--请求数据成功创建的视图
     public abstract View onCreateContentView();

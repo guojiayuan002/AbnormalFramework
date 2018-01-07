@@ -1,8 +1,8 @@
 package com.jiayuan.mainframework.utils;
 
-import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
+
+import com.jiayuan.mainframework.application.MyApplication;
 
 
 /**
@@ -10,12 +10,17 @@ import android.widget.Toast;
  */
 
 public class ToastUtils {
-    public static void showToast(Context context, final String msg) {
-        if ("main".equals(Thread.currentThread().getName())) {
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-        } else {
-            Log.d("ToastUtils", "不再主线程");
+
+    private static Toast sToast;
+
+    public static void showToast( String msg) {
+        if (sToast == null) {
+
+            sToast = Toast.makeText(MyApplication.getContext(), msg, Toast.LENGTH_SHORT);
         }
+        //如果这个Toast已经在显示了，那么这里会立即修改文本
+        sToast.setText(msg);
+        sToast.show();
     }
 
 }
